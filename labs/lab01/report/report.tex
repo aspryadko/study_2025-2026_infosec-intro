@@ -208,6 +208,10 @@
 виртуальную машину, настройки минимально необходимых для дальнейшей
 работы сервисов.
 
+Цель данного отчёта --- зафиксировать процесс развёртывания ОС Rocky
+Linux 8.10 и продемонстрировать владение базовыми инструментами анализа
+системы.
+
 \chapter{Задание}\label{ux437ux430ux434ux430ux43dux438ux435}
 
 \begin{enumerate}
@@ -218,42 +222,20 @@
 \item
   Установить ОС Rocky Linux 8.10.
 \item
-  Собрать техническую информацию о системе (ядро, процессор, память,
-  файловая система).
+  Собрать информацию о системе (ядро, процессор, память, файловая
+  система).
 \end{enumerate}
 
 \chapter{Теоретическое
 введение}\label{ux442ux435ux43eux440ux435ux442ux438ux447ux435ux441ux43aux43eux435-ux432ux432ux435ux434ux435ux43dux438ux435}
 
-VirtualBox --- это программное обеспечение для виртуализации,
-позволяющее запускать гостевые ОС внутри основной системы. Rocky Linux
---- дистрибутив, обеспечивающий полную бинарную совместимость с Red Hat
-Enterprise Linux.
-
-В табл.~\ref{tbl-std-dir} приведено краткое описание стандартных
-каталогов Unix.
-
-\begin{longtable}[]{@{}ll@{}}
-\caption{Описание некоторых каталогов файловой системы GNU
-Linux}\label{tbl-std-dir}\tabularnewline
-\toprule\noalign{}
-Имя каталога & Описание каталога \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Имя каталога & Описание каталога \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-\texttt{/} & Корневая директория \\
-\texttt{/bin} & Основные системные утилиты \\
-\texttt{/etc} & Конфигурационные файлы программ \\
-\texttt{/home} & Домашние директории пользователей \\
-\end{longtable}
-
-Более подробно про Unix см. в
-\autocite{tanenbaum_book_modern-os_ru,robbins_book_bash_en}.
+В рамках данной работы производится установка дистрибутива Rocky Linux,
+который является бинарно совместимым с Red Hat Enterprise Linux (RHEL).
+Для управления ресурсами используется гипервизор (VirtualBox),
+позволяющий изолировать гостевую ОС от хостовой. Основные сведения о
+системе в Linux-системах традиционно извлекаются из виртуальной файловой
+системы \texttt{/proc} или с помощью специализированных утилит типа
+\texttt{hostnamectl} и \texttt{df}.
 
 \chapter{Выполнение лабораторной
 работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux43bux430ux431ux43eux440ux430ux442ux43eux440ux43dux43eux439-ux440ux430ux431ux43eux442ux44b}
@@ -262,74 +244,218 @@ Linux}\label{tbl-std-dir}\tabularnewline
 ОС}\label{ux443ux441ux442ux430ux43dux43eux432ux43aux430-ux43eux441}
 
 В процессе работы была создана виртуальная машина со следующими
-параметрами: - \textbf{Имя:} aspryadko - \textbf{ОС:} Red Hat (64-bit) -
-\textbf{Память:} 4096 MB - \textbf{Диск:} 40 GB
+параметрами: * \textbf{Имя:} aspryadko * \textbf{ОС:} Red Hat (64-bit) *
+\textbf{Память:} 4096 MB * \textbf{Диск:} 40 GB
 
-При установке было задано имя хоста \texttt{aspryadko.localdomain}.
+При установке было задано имя хоста \texttt{aspryadko.localdomain} и
+создан пользователь \texttt{aspryadko} с правами администратора.
 
 \section{Сбор сведений о
 системе}\label{ux441ux431ux43eux440-ux441ux432ux435ux434ux435ux43dux438ux439-ux43e-ux441ux438ux441ux442ux435ux43cux435}
 
-Ниже представлены результаты выполнения команд для анализа системы:
+Ниже представлены результаты выполнения команд для анализа конфигурации
+установленной системы.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
+\tightlist
 \item
   \textbf{Версия ядра Linux.} Использована команда \texttt{hostnamectl}
-  (\textbf{?@fig-001}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/host.png}
+  (рис. Рисунок~\ref{fig-001}).
+\end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/host.png}
+
+}
+
+\caption{\label{fig-001}Сведения о хосте и ядре}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
 \item
-  \textbf{Частота процессора (Detected Mhz).} Извлечена из файла
-  \texttt{/proc/cpuinfo} (\textbf{?@fig-002}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/cpu_mhz.png}
+  \textbf{Частота процессора (Detected Mhz).} Данные извлечены из
+  системного файла \texttt{/proc/cpuinfo} (рис. Рисунок~\ref{fig-002}).
+\end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/cpu_mhz.png}
+
+}
+
+\caption{\label{fig-002}Частота процессора}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
 \item
-  \textbf{Модель процессора.} Данные извлечены из \texttt{/proc/cpuinfo}
-  (\textbf{?@fig-003}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/cpu.png}
+  \textbf{Модель процессора.} Использован вывод из того же файла (рис.
+  Рисунок~\ref{fig-003}).
+\end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/cpu.png}
+
+}
+
+\caption{\label{fig-003}Модель процессора}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
 \item
   \textbf{Объем оперативной памяти.} Использована команда
-  \texttt{free\ -m} (\textbf{?@fig-004}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/mem.png}
+  \texttt{free\ -m} (рис. Рисунок~\ref{fig-004}).
+\end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/mem.png}
+
+}
+
+\caption{\label{fig-004}Оперативная память}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
 \item
-  \textbf{Тип файловой системы.} Определен с помощью \texttt{df\ -Th}
-  (\textbf{?@fig-005}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/fs.png}
+  \textbf{Тип файловой системы.} Использована команда \texttt{df\ -Th}
+  (рис. Рисунок~\ref{fig-005}).
+\end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/fs.png}
+
+}
+
+\caption{\label{fig-005}Файловая система}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
 \item
   \textbf{Тип гипервизора.} Использована команда \texttt{virt-what}
-  (\textbf{?@fig-006}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/virt.png}
-\item
-  \textbf{Последовательность монтирования файловых систем.} Получена
-  через \texttt{findmnt} (\textbf{?@fig-007}).
-  \includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/mount_seq.png}
+  (рис. Рисунок~\ref{fig-006}).
 \end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/virt.png}
+
+}
+
+\caption{\label{fig-006}Тип гипервизора}
+
+\end{figure}%
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  \textbf{Последовательность монтирования файловых систем.} Получена с
+  помощью команды \texttt{findmnt} (рис. Рисунок~\ref{fig-007}).
+\end{enumerate}
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.7\linewidth,height=\textheight,keepaspectratio]{image/mount_seq.png}
+
+}
+
+\caption{\label{fig-007}Последовательность монтирования}
+
+\end{figure}%
 
 \chapter{Ответы на контрольные
 вопросы}\label{ux43eux442ux432ux435ux442ux44b-ux43dux430-ux43aux43eux43dux442ux440ux43eux43bux44cux43dux44bux435-ux432ux43eux43fux440ux43eux441ux44b}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
-  \textbf{Какую информацию содержит учётная запись пользователя?} Логин,
-  UID, GID, полное имя, домашний каталог, путь к shell и хеш пароля.
+  \textbf{Какую информацию содержит учётная запись пользователя?}
+  Учётная запись (хранится в \texttt{/etc/passwd} и
+  \texttt{/etc/shadow}) включает: логин, UID и GID, полное имя, домашний
+  каталог, командную оболочку и хеш пароля.
 \item
-  \textbf{Команды терминала:} \texttt{man} (справка), \texttt{cd}
-  (навигация), \texttt{ls} (просмотр), \texttt{chmod} (права).
+  \textbf{Команды терминала:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Справка:} \texttt{man\ \textless{}команда\textgreater{}},
+    \texttt{\textless{}команда\textgreater{}\ -\/-help}.
+  \item
+    \textbf{Навигация:} \texttt{cd\ \textless{}путь\textgreater{}}.
+  \item
+    \textbf{Просмотр каталога:} \texttt{ls\ -la}.
+  \item
+    \textbf{Объём папки:}
+    \texttt{du\ -sh\ \textless{}путь\textgreater{}}.
+  \item
+    \textbf{Манипуляции с файлами:} \texttt{mkdir} (каталог),
+    \texttt{touch} (файл), \texttt{rm} (удаление).
+  \item
+    \textbf{Права доступа:} \texttt{chmod}.
+  \item
+    \textbf{История:} \texttt{history}.
+  \end{itemize}
 \item
-  \textbf{Файловая система:} Способ организации данных (XFS, Ext4).
+  \textbf{Что такое файловая система?} Это способ организации данных.
+  Примеры: \textbf{XFS} (высокая производительность), \textbf{Ext4}
+  (стандарт Linux), \textbf{NTFS} (стандарт Windows).
 \item
-  \textbf{Просмотр монтирования:} Команды \texttt{mount} или
-  \texttt{df\ -Th}.
+  \textbf{Как посмотреть смонтированные ФС?} Команды \texttt{mount}
+  (подробно) и \texttt{df\ -Th} (удобно для чтения).
 \item
-  \textbf{Зависший процесс:} Завершается командой
-  \texttt{kill\ -9\ \textless{}PID\textgreater{}}.
+  \textbf{Как удалить зависший процесс?} Узнать PID через \texttt{top}
+  или \texttt{ps}, затем выполнить
+  \texttt{kill\ \textless{}PID\textgreater{}} или
+  \texttt{kill\ -9\ \textless{}PID\textgreater{}} для принудительного
+  завершения.
 \end{enumerate}
 
 \chapter{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
 
-Я научился создавать виртуальные машины в VirtualBox, устанавливать
-Rocky Linux и использовать команды терминала для анализа системы.
+В ходе выполнения лабораторной работы я научился создавать виртуальные
+машины в среде VirtualBox, устанавливать операционную систему семейства
+Linux (на примере Rocky Linux) и использовать базовый инструментарий
+терминала для анализа аппаратных и программных характеристик системы.
 
 \chapter*{Список
 литературы}\label{ux441ux43fux438ux441ux43eux43a-ux43bux438ux442ux435ux440ux430ux442ux443ux440ux44b}

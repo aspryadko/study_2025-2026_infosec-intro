@@ -3,17 +3,14 @@ author:
   name: Алексей С. Прядко
   affiliation:
     - name: Российский университет дружбы народов
-      city: Москва
       country: Российская Федерация
+      postal-code: 117198
+      city: Москва
       address: ул. Миклухо-Маклая, д. 6
 
 title: "Отчёт по лабораторной работе №1"
 subtitle: "Установка и конфигурация операционной системы на виртуальную машину"
 lang: ru-RU
-format:
-  pdf:
-    documentclass: scrreprt
-    number-sections: true
 ---
 
 # Цель работы
