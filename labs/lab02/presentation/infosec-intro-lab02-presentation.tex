@@ -60,7 +60,6 @@
 \fi
 \usepackage{lmodern}
 
-\usetheme[]{metropolis}
 \ifPDFTeX\else
   % xetex/luatex font selection
 \fi
@@ -190,17 +189,17 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Лабораторная работа № 2},
-  pdfauthor={Алексей Прядко},
+  pdftitle={Брутфорс},
+  pdfauthor={Прядко Алексей Семенович},
   pdflang={ru-RU},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Лабораторная работа № 2}
-\subtitle{Дискреционное разграничение прав в Linux. Основные атрибуты}
-\author{Алексей Прядко}
-\date{2026-03-07}
+\title{Брутфорс}
+\subtitle{Индивидуальный проект часть 3}
+\author{Прядко Алексей Семенович}
+\date{2026-04-04}
 
 \begin{document}
 \frame{\titlepage}
@@ -215,218 +214,159 @@
 \tableofcontents
 }
 
-\section{Информация}\label{ux438ux43dux444ux43eux440ux43cux430ux446ux438ux44f}
-
-\begin{frame}{Докладчик}
-\phantomsection\label{ux434ux43eux43aux43bux430ux434ux447ux438ux43a}
-\begin{columns}[c]
-\begin{column}{0.7\linewidth}
-\begin{itemize}[<+->]
-\tightlist
-\item
-  Александр Прядко
-\item
-  Студент кафедры кибербезопасности
-\item
-  Российский университет дружбы народов
-\item
-  Дисциплина: Информационная безопасность
-\end{itemize}
-\end{column}
-
-\begin{column}{0.3\linewidth}
-\end{column}
-\end{columns}
-\end{frame}
-
 \section{Вводная
 часть}\label{ux432ux432ux43eux434ux43dux430ux44f-ux447ux430ux441ux442ux44c}
 
-\begin{frame}{Цель работы}
-\phantomsection\label{ux446ux435ux43bux44c-ux440ux430ux431ux43eux442ux44b}
+\begin{frame}{Цели и задачи}
+\phantomsection\label{ux446ux435ux43bux438-ux438-ux437ux430ux434ux430ux447ux438}
 \begin{itemize}[<+->]
 \tightlist
 \item
-  Получение практических навыков работы в консоли с атрибутами файлов
+  \textbf{Цель:} Изучение методов тестирования веб-приложений.
 \item
-  Закрепление теоретических основ дискреционного разграничения доступа
-  (DAC)
-\item
-  Изучение влияния прав доступа директорий на операции с файлами
+  \textbf{Задачи:}
+
+  \begin{itemize}[<+->]
+  \tightlist
+  \item
+    Развернуть среду Kali Linux и приложение DVWA.
+  \item
+    Освоить работу с инструментом Hydra.
+  \item
+    Реализовать атаку типа Brute Force.
+  \item
+    Задокументировать результаты.
+  \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Задачи}
-\phantomsection\label{ux437ux430ux434ux430ux447ux438}
-\begin{enumerate}[<+->]
+\begin{frame}{Используемые инструменты}
+\phantomsection\label{ux438ux441ux43fux43eux43bux44cux437ux443ux435ux43cux44bux435-ux438ux43dux441ux442ux440ux443ux43cux435ux43dux442ux44b}
+\begin{itemize}[<+->]
 \tightlist
 \item
-  Создание и настройка учетной записи пользователя \texttt{guest}
+  \textbf{ОС:} Kali Linux (специализированный дистрибутив).
 \item
-  Анализ системных файлов (\texttt{/etc/passwd})
+  \textbf{Мишень:} DVWA (Damn Vulnerable Web Application).
 \item
-  Проведение экспериментов с правами доступа (\texttt{chmod})
+  \textbf{Инструмент атаки:} THC-Hydra.
 \item
-  Определение минимально необходимых прав для базовых операций
-\end{enumerate}
+  \textbf{Словарь:} стандартный набор паролей Metasploit.
+\end{itemize}
 \end{frame}
 
 \section{Выполнение
 работы}\label{ux432ux44bux43fux43eux43bux43dux435ux43dux438ux435-ux440ux430ux431ux43eux442ux44b}
 
-\begin{frame}[fragile]{Подготовка и сбор данных}
-\phantomsection\label{ux43fux43eux434ux433ux43eux442ux43eux432ux43aux430-ux438-ux441ux431ux43eux440-ux434ux430ux43dux43dux44bux445}
+\begin{frame}{Шаг 1. Подготовка цели}
+\phantomsection\label{ux448ux430ux433-1.-ux43fux43eux434ux433ux43eux442ux43eux432ux43aux430-ux446ux435ux43bux438}
+\begin{columns}[c]
+\begin{column}{0.6\linewidth}
 \begin{itemize}[<+->]
 \tightlist
 \item
-  Создан пользователь \texttt{guest} командой \texttt{useradd}
+  Установка DVWA на веб-сервер Apache.
 \item
-  Определены основные атрибуты:
+  Настройка базы данных MariaDB.
+\item
+  Установка уровня безопасности \textbf{Low} для проведения тестов.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.4\linewidth}
+\pandocbounded{\includegraphics[keepaspectratio]{./image/screen01.png}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Шаг 2. Анализ уязвимости}
+\phantomsection\label{ux448ux430ux433-2.-ux430ux43dux430ux43bux438ux437-ux443ux44fux437ux432ux438ux43cux43eux441ux442ux438}
+\begin{columns}[c]
+\begin{column}{0.6\linewidth}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Переход в раздел \textbf{Brute Force}.
+\item
+  Определение маркера ошибки при неудачном входе.
+\item
+  Фраза-индикатор: \emph{«Username and/or password incorrect.»}
+\end{itemize}
+\end{column}
+
+\begin{column}{0.4\linewidth}
+\pandocbounded{\includegraphics[keepaspectratio]{./image/screen02.png}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Шаг 3. Запуск Hydra}
+\phantomsection\label{ux448ux430ux433-3.-ux437ux430ux43fux443ux441ux43a-hydra}
+\begin{columns}[c]
+\begin{column}{0.5\linewidth}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Использование ключа \texttt{-V} для визуализации перебора.
+\item
+  Использование \texttt{-f} для остановки при нахождении пароля.
+\item
+  Обязательная передача \texttt{Cookie} сессии.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\linewidth}
+\pandocbounded{\includegraphics[keepaspectratio]{./image/screen03.png}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Результаты
+исследования}\label{ux440ux435ux437ux443ux43bux44cux442ux430ux442ux44b-ux438ux441ux441ux43bux435ux434ux43eux432ux430ux43dux438ux44f}
+
+\begin{frame}[fragile]{Успешный взлом}
+\phantomsection\label{ux443ux441ux43fux435ux448ux43dux44bux439-ux432ux437ux43bux43eux43c}
+\begin{columns}[c]
+\begin{column}{0.6\linewidth}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Пароль найден успешно.
+\item
+  Результат сохранен в файл \texttt{hydra\_result.log}.
+\item
+  Подтверждена критическая уязвимость формы входа.
+\end{itemize}
+\end{column}
+
+\begin{column}{0.4\linewidth}
+\pandocbounded{\includegraphics[keepaspectratio]{./image/screen04.png}}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Выводы}\label{ux432ux44bux432ux43eux434ux44b}
+
+\begin{frame}{Итоги работы}
+\phantomsection\label{ux438ux442ux43eux433ux438-ux440ux430ux431ux43eux442ux44b}
+\begin{itemize}[<+->]
+\tightlist
+\item
+  Изучен механизм работы атак методом перебора.
+\item
+  Получены навыки настройки систем информационной безопасности в Linux.
+\item
+  Сформулированы рекомендации:
 
   \begin{itemize}[<+->]
   \tightlist
   \item
-    \textbf{UID}: 1001
+    Использовать сложные пароли.
   \item
-    \textbf{GID}: 1001
+    Внедрять ограничение попыток входа (Lockout).
   \item
-    \textbf{Home}: \texttt{/home/guest}
+    Использовать двухфакторную аутентификацию.
   \end{itemize}
-\item
-  Проверены права доступа на домашние каталоги в \texttt{/home/}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Эксперименты с правами доступа}
-\phantomsection\label{ux44dux43aux441ux43fux435ux440ux438ux43cux435ux43dux442ux44b-ux441-ux43fux440ux430ux432ux430ux43cux438-ux434ux43eux441ux442ux443ux43fux430}
-\begin{itemize}[<+->]
-\tightlist
-\item
-  Создана директория \texttt{dir1}
-\item
-  Исследованы состояния:
-
-  \begin{itemize}[<+->]
-  \tightlist
-  \item
-    \textbf{chmod 000}: Полная блокировка доступа
-  \item
-    \textbf{chmod 100}: Разрешение только на \enquote{вход} (\texttt{x})
-  \item
-    \textbf{chmod 700}: Полный доступ владельца
-  \end{itemize}
-\item
-  Проведена проверка операций: создание, удаление, чтение и запись
-  файлов
-\end{itemize}
-\end{frame}
-
-\section{Результаты}\label{ux440ux435ux437ux443ux43bux44cux442ux430ux442ux44b}
-
-\begin{frame}{Установленные права и разрешённые действия}
-\phantomsection\label{ux443ux441ux442ux430ux43dux43eux432ux43bux435ux43dux43dux44bux435-ux43fux440ux430ux432ux430-ux438-ux440ux430ux437ux440ux435ux448ux451ux43dux43dux44bux435-ux434ux435ux439ux441ux442ux432ux438ux44f}
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.0816}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}
-  >{\centering\arraybackslash}p{(\linewidth - 18\tabcolsep) * \real{0.1020}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Права директор.
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Права файла
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Созд.
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Удал.
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Запись
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Чтение
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-cd
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-ls
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-Переим.
-\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
-chmod
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-d (000) & 0 & - & - & - & - & - & - & - & - \\
-d--x------ (100) & 0 & - & - & - & - & + & - & - & + \\
-drwx------ (700) & -rwx (700) & + & + & + & + & + & + & + & + \\
-\bottomrule\noalign{}
-\end{longtable}
-\end{frame}
-
-\begin{frame}{Минимальные права для совершения операций}
-\phantomsection\label{ux43cux438ux43dux438ux43cux430ux43bux44cux43dux44bux435-ux43fux440ux430ux432ux430-ux434ux43bux44f-ux441ux43eux432ux435ux440ux448ux435ux43dux438ux44f-ux43eux43fux435ux440ux430ux446ux438ux439}
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
-  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
-\toprule\noalign{}
-\begin{minipage}[b]{\linewidth}\raggedright
-Операция
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Минимальные права на директорию
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Минимальные права на файл
-\end{minipage} \\
-\midrule\noalign{}
-\endhead
-Создание файла & wx (3) & --- \\
-Удаление файла & wx (3) & --- \\
-Чтение файла & x (1) & r (4) \\
-Запись в файл & x (1) & w (2) \\
-Переименование файла & wx (3) & --- \\
-Создание поддиректории & wx (3) & --- \\
-Удаление поддиректории & wx (3) & --- \\
-\bottomrule\noalign{}
-\end{longtable}
-\end{frame}
-
-\section{Итоги}\label{ux438ux442ux43eux433ux438}
-
-\begin{frame}[fragile]{Выводы}
-\phantomsection\label{ux432ux44bux432ux43eux434ux44b}
-\begin{itemize}[<+->]
-\tightlist
-\item
-  Права на директорию являются первичными для доступа к объектам внутри
-  неё
-\item
-  Право \textbf{\texttt{x} (выполнение)} на папку необходимо для
-  обращения к любому файлу внутри
-\item
-  Право \textbf{\texttt{w} (запись)} на папку позволяет удалять файлы,
-  даже если на сам файл прав нет
-\item
-  Удаление и переименование --- это операции изменения
-  \textbf{директории}, а не файла
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Финальный слайд}
-\phantomsection\label{ux444ux438ux43dux430ux43bux44cux43dux44bux439-ux441ux43bux430ux439ux434}
-\begin{itemize}[<+->]
-\tightlist
-\item
-  Дискреционное управление доступом в Linux гибко разграничивает права
-  субъектов
-\item
-  Понимание атрибутов \texttt{rwx} критически важно для обеспечения
-  безопасности системы
-\item
-  \textbf{Спасибо за внимание!}
 \end{itemize}
 \end{frame}
 
